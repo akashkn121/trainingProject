@@ -13,7 +13,6 @@ const fieldContainer = {
 };
 
 const inputCss = {
-  // marginLeft: "20px",
   height: "30px",
   width: "300px",
   margin: "auto",
