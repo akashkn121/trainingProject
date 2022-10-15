@@ -37,7 +37,7 @@ function Modal(props) {
     managerName: "",
     deptName: "",
     location: "",
-    employee:{}
+    employee:[]
   });
 
   const handleChange = (value, fieldName) => {
@@ -75,7 +75,7 @@ function Modal(props) {
             placeholder="Enter the Department name"
           />
         </div>
-
+        
         <div style={fieldContainer}>
           <p>Manager:</p>
           <input

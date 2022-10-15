@@ -5,6 +5,7 @@ import Body from "../Body";
 
 const Layout = () => {
   const [selectedDept, setSelectedDept] = useState(null);
+  const [deptDetails, setDeptDetails] = useState([]);
 
   return (
     <div id="main">
@@ -12,11 +13,23 @@ const Layout = () => {
 
       <div id="content">
         <div id="sidebar">
-          <SideBar setSelectedDept={setSelectedDept} />
+          <SideBar
+            deptDetails={deptDetails}
+            setSelectedDept={setSelectedDept}
+            setDeptDetails={setDeptDetails}
+          />
         </div>
 
         <div id="body">
-          {selectedDept && <Body selectedDept={selectedDept}  />}
+          {selectedDept && (
+            <Body
+              selectedDeptId={selectedDept}
+              deptDetails={deptDetails}
+              setDeptDetails={setDeptDetails}
+              // setSelectedDept={setSelectedDept}
+              // departmentId={departmentId}
+            />
+          )}
         </div>
       </div>
     </div>

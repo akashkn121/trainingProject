@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 const mainContainer = {
   position: "fixed",
@@ -9,6 +9,8 @@ const mainContainer = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  top: "0",
+  left: "0",
   //   paddingTop: "7%",
 };
 
@@ -24,6 +26,7 @@ const subContainer = {
 
 const inputcontent = {
   display: "flex",
+ 
 };
 const inputId = {
   height: "25px",
@@ -41,23 +44,41 @@ const inputloc = {
   marginLeft: "39px",
 };
 
-const input = {
+const inputPhno = {
   height: "25px",
   width: "300px",
   margin: "auto",
   justifyContent: "center",
+  marginLeft: "63px",
+};
+
+const inputEmail = {
+  height: "25px",
+  width: "300px",
+  margin: "auto",
+  justifyContent: "center",
+  marginLeft: "133px",
+};
+const inputName = {
+  height: "25px",
+  width: "300px",
+  margin: "auto",
+  justifyContent: "center",
+  marginLeft: "55px",
 };
 
 const addbtn = {
-  width: "50px",
+  width: "55px",
   height: "30px",
   backgroundColor: "green",
+  borderRadius: "8px",
 };
 
 const cnlbtn = {
-  width: "50px",
+  width: "55px",
   height: "30px",
   backgroundColor: "red",
+  borderRadius: "8px",
 };
 
 const buttons = {
@@ -66,36 +87,90 @@ const buttons = {
 };
 
 const AddEmployee = (props) => {
-  const { onClick } = props;
+  const { onClose, deptDetails, setDeptDetails, selectedDeptObj } = props;
+  const [empObj, setempObj] = useState({});
 
   const handleClick = () => {
-    onClick();
+    const employeeArr = selectedDeptObj.employee || [];
+    const newEmpArr = [...employeeArr, empObj];
+    const newSelectedDeptObj = { ...selectedDeptObj, employee: newEmpArr };
+    const selectedIndex = deptDetails.indexOf(selectedDeptObj);
+
+    const deptArr1 = deptDetails.slice(0, selectedIndex);
+    const deptArr2 = deptDetails.slice(selectedIndex + 1);
+
+    setDeptDetails([...deptArr1, newSelectedDeptObj, ...deptArr2]);
+    onClose();
+  };
+
+  const handleChange = (value, fieldName) => {
+    setempObj({ ...empObj, [fieldName]: value });
   };
 
   return (
     <div style={mainContainer}>
       <div style={subContainer}>
         <div style={inputcontent}>
-          <p>Employee Name :</p>
-          <input style={input} />
+          <p>Employee Id :</p>
+          <input
+            type="text"
+            name="empId"
+            value={empObj.empId}
+            style={inputId}
+            onChange={(e) => handleChange(e.target.value, "empId")}
+          />
         </div>
 
         <div style={inputcontent}>
-          <p>Employee Id :</p>
-          <input style={inputId} />
+          <p>Employee Name :</p>
+          <input
+            type="text"
+            name="empName"
+            value={empObj.empName}
+            style={inputName}
+            onChange={(e) => handleChange(e.target.value, "empName")}
+          />
         </div>
 
         <div style={inputcontent}>
           <p>Employee Location :</p>
-          <input style={inputloc} />
+          <input
+            type="text"
+            name="empLoc"
+            value={empObj.empLoc}
+            style={inputloc}
+            onChange={(e) => handleChange(e.target.value, "empLoc")}
+          />
+        </div>
+
+        <div style={inputcontent}>
+          <p>Phone Number :</p>
+          <input
+            type="text"
+            name="empPhno"
+            value={empObj.empPhno}
+            style={inputPhno}
+            onChange={(e) => handleChange(e.target.value, "empPhno")}
+          />
+        </div>
+
+        <div style={inputcontent}>
+          <p>Email :</p>
+          <input
+            type="email"
+            name="empEmail"
+            value={empObj.empEmail}
+            style={inputEmail}
+            onChange={(e) => handleChange(e.target.value, "empEmail")}
+          />
         </div>
 
         <div style={buttons}>
+          <button style={cnlbtn} onClick={() => onClose()}>
+            Cancel
+          </button>
           <button style={addbtn} onClick={() => handleClick()}>
             Add
-          </button>
-          <button style={cnlbtn} onClick={() => onClick()}>
-            cancel
           </button>
         </div>
       </div>

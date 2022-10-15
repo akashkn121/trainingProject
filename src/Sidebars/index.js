@@ -3,16 +3,21 @@ import Modal from "../Modal";
 import "./index.css";
 
 const SideBar = (props) => {
-  const { setSelectedDept } = props;
+  const { deptDetails, setDeptDetails, setSelectedDept } =
+    props;
   const [showModal, setShowModal] = useState(false);
-  const [deptDetails, setDeptDetails] = useState([]);
 
   return (
     <div id="mainBar">
       <div>
         <ul>
           {deptDetails.map((item, index) => (
-            <h4 onClick={() => setSelectedDept(item)} key={index}>
+            <h4
+              key={index}
+              onClick={() => {
+                setSelectedDept(item.deptId);
+              }}
+            >
               {item.deptName}
             </h4>
           ))}
