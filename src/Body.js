@@ -113,8 +113,8 @@ const Body = (props) => {
 
   const deletDept = () => {
     const indexWantsToDelete = deptDetails.indexOf(selectedDeptObj);
-    const deptArr1 = deptDetails.slice(0, indexWantsToDelete);
-    const deptArr2 = deptDetails.slice(indexWantsToDelete + 1);
+    const deptArr1 = deptDetails.slice(0, indexWantsToDelete)||[];
+    const deptArr2 = deptDetails.slice(indexWantsToDelete + 1)||[];
     setDeptDetails([...deptArr1, ...deptArr2]);
   };
 
