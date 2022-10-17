@@ -35,22 +35,27 @@ const buttons = {
 
 const inputId = {
   marginLeft: "92px",
+  height: "30px",
 };
 
 const inputName = {
   marginLeft: "66px",
+  height: "30px",
 };
 
 const inputLoc = {
   marginLeft: "50px",
+  height: "30px",
 };
 
 const inputPhno = {
   marginLeft: "75px",
+  height: "30px",
 };
 
 const inputMail = {
   marginLeft: "140px",
+  height: "30px",
 };
 
 const addbtn = {
@@ -76,14 +81,14 @@ const EditEmp = (props) => {
     deptDetails,
   } = props;
   const [tempObj, setTempObj] = useState({});
+  const empArrToEdit = selectedDeptObj.employee;
 
   const handlechange = (value, fieldname) => {
     setTempObj({ ...tempObj, [fieldname]: value });
   };
   const handleClick = () => {
-    const empToEdit = selectedDeptObj.employee;
-    const empList1 = empToEdit.slice(0, editEmpIndex);
-    const empList2 = empToEdit.slice(editEmpIndex + 1);
+    const empList1 = empArrToEdit.slice(0, editEmpIndex);
+    const empList2 = empArrToEdit.slice(editEmpIndex + 1);
     const newEmplist = [...empList1, tempObj, ...empList2];
     const newSelectedDept = { ...selectedDeptObj, employee: newEmplist };
 
@@ -98,38 +103,49 @@ const EditEmp = (props) => {
   return (
     <div style={mainContainer}>
       <div style={subContainer}>
+        <h3>Edit Employee:</h3>
         <div style={inputField}>
           <p>Employee Id:</p>
           <input
+            name="empId"
             style={inputId}
+            defaultValue={selectedDeptObj.employee[editEmpIndex].empId}
             onChange={(e) => handlechange(e.target.value, "empId")}
           />
         </div>
         <div style={inputField}>
           <p>Employee Name:</p>
           <input
+            name="empName"
             style={inputName}
+            defaultValue={selectedDeptObj.employee[editEmpIndex].empName}
             onChange={(e) => handlechange(e.target.value, "empName")}
           />
         </div>
         <div style={inputField}>
           <p>Employee Location:</p>
           <input
+            name="empLoc"
             style={inputLoc}
+            defaultValue={selectedDeptObj.employee[editEmpIndex].empLoc}
             onChange={(e) => handlechange(e.target.value, "empLoc")}
           />
         </div>
         <div style={inputField}>
           <p>Phone Number:</p>
           <input
+            name="empPhno"
             style={inputPhno}
+            defaultValue={selectedDeptObj.employee[editEmpIndex].empPhno}
             onChange={(e) => handlechange(e.target.value, "empPhno")}
           />
         </div>
         <div style={inputField}>
           <p>Email:</p>
           <input
+            name="empEmail"
             style={inputMail}
+            defaultValue={selectedDeptObj.employee[editEmpIndex].empEmail}
             onChange={(e) => handlechange(e.target.value, "empEmail")}
           />
         </div>

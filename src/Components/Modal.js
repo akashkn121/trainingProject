@@ -1,6 +1,42 @@
 import React, { useState } from "react";
-import "./index.css";
 
+const styleObj = {
+  list: {
+    textAlign: "left",
+  },
+  input: {
+    marginLeft: "20px",
+  },
+  modal: {
+    position: "fixed",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: "1",
+    width: "100%",
+    height: "100%",
+    top: "0",
+    backgroundColor: "rgb(0, 0, 0, 0.4)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    margin: "auto",
+    width: "46%",
+    padding: "20px",
+    height: "max-content",
+    border: "1px solid gray",
+    display: "flex",
+    flexDirection: "column",
+  },
+  btnInModalContent: {
+    display: "flex",
+    justifyContent: "space-between",
+  },
+};
+const star = {
+  color: "red",
+  display: "inline-flex",
+};
 const inputCssDeptname = {
   height: "30px",
   width: "300px",
@@ -37,7 +73,7 @@ function Modal(props) {
     managerName: "",
     deptName: "",
     location: "",
-    employee:[]
+    employee: [],
   });
 
   const handleChange = (value, fieldName) => {
@@ -48,7 +84,8 @@ function Modal(props) {
     setDeptObj({ ...deptObj, [fieldName]: value });
     */
   };
-  const handleClick = () => {
+
+  const onAddClick = () => {
     if (deptObj.deptName !== "") {
       const deptId = new Date().valueOf();
       const temtDept = { ...deptObj, deptId: deptId };
@@ -58,14 +95,16 @@ function Modal(props) {
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
+    <div style={styleObj.modal}>
+      <div style={styleObj.modalContent}>
         <h4>
           <u>Add Department Details</u>
         </h4>
 
         <div style={fieldContainer}>
-          <p>Department Name:</p>
+          <p>
+            Department Name<h4 style={star}>*</h4>:
+          </p>
           <input
             style={inputCssDeptname}
             type="text"
@@ -75,7 +114,7 @@ function Modal(props) {
             placeholder="Enter the Department name"
           />
         </div>
-        
+
         <div style={fieldContainer}>
           <p>Manager:</p>
           <input
@@ -100,11 +139,11 @@ function Modal(props) {
           />
         </div>
 
-        <div className="btn">
+        <div style={styleObj.btnInModalContent}>
           <button style={btnCancel} onClick={() => onClose()}>
             Cancel
           </button>
-          <button style={btnadd} onClick={() => handleClick()}>
+          <button style={btnadd} onClick={() => onAddClick()}>
             Add
           </button>
         </div>

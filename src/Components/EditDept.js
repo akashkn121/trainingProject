@@ -1,4 +1,4 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 
 const mainContainer = {
   position: "fixed",
@@ -45,30 +45,35 @@ const cnlbtn = {
 
 const inputName = {
   marginLeft: "34px",
+  height: "30px",
 };
 
 const inputMgr = {
   marginLeft: "100px",
+  height: "30px",
 };
 
 const inputLoc = {
   marginLeft: "100px",
+  height: "30px",
 };
 
 const EditDept = (props) => {
   const { onClose, selectedDeptObj, deptDetails, setDeptDetails } = props;
-  const [newSelecterDeptObj, setNewSelectedDeptObj] = useState(null);
+  const [tempObj, setTempObj] = useState({});
 
   const handleChange = (value, fieldName) => {
-    setNewSelectedDeptObj({ ...selectedDeptObj, [fieldName]: value });
+    if (value !== "") {
+      setTempObj({ ...tempObj, [fieldName]: value });
+    }
   };
 
   const handleClick = () => {
     const indexOfSelectedObj = deptDetails.indexOf(selectedDeptObj);
-
-    const deptArr1 = deptDetails.slice(0, indexOfSelectedObj);
-    const deptArr2 = deptDetails.slice(indexOfSelectedObj + 1);
-    setDeptDetails(...deptArr1, newSelecterDeptObj, ...deptArr2);
+    const newSelectedDeptObj = { ...selectedDeptObj, ...tempObj };
+    const deptArr1 = deptDetails.slice(0, indexOfSelectedObj) || [];
+    const deptArr2 = deptDetails.slice(indexOfSelectedObj + 1) || [];
+    setDeptDetails([...deptArr1, newSelectedDeptObj, ...deptArr2]);
     onClose();
   };
 
@@ -76,27 +81,31 @@ const EditDept = (props) => {
     <div>
       <div style={mainContainer}>
         <div style={subContainer}>
+          <h3>Edit Department Details:</h3>
           <div style={inputField}>
             <p>Department Name:</p>
             <input
+              name="deptName"
               style={inputName}
-              value={selectedDeptObj.deptName}
+              defaultValue={selectedDeptObj.deptName}
               onChange={(e) => handleChange(e.target.value, "deptName")}
             />
           </div>
           <div style={inputField}>
             <p>Manager:</p>
             <input
+              name="managerName"
               style={inputMgr}
-              value={selectedDeptObj.managerName}
+              defaultValue={selectedDeptObj.managerName}
               onChange={(e) => handleChange(e.target.value, "managerName")}
             />
           </div>
           <div style={inputField}>
             <p>Location:</p>
             <input
+              name="location"
               style={inputLoc}
-              value={selectedDeptObj.location}
+              defaultValue={selectedDeptObj.location}
               onChange={(e) => handleChange(e.target.value, "location")}
             />
           </div>

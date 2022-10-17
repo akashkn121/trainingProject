@@ -26,7 +26,6 @@ const subContainer = {
 
 const inputcontent = {
   display: "flex",
- 
 };
 const inputId = {
   height: "25px",
@@ -110,6 +109,7 @@ const AddEmployee = (props) => {
   return (
     <div style={mainContainer}>
       <div style={subContainer}>
+        <h3>Add Employee:</h3>
         <div style={inputcontent}>
           <p>Employee Id :</p>
           <input

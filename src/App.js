@@ -1,6 +1,6 @@
 // import { useState } from "react";
 import "./App.css";
-import Layout from "./Layout/index";
+import Layout from "./Components/Layout";
 // import SideBar from "./SideBar";
 
 // function Clock() {
