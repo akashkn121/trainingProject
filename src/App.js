@@ -23,6 +23,8 @@ function App() {
       </div> */}
 
       <Layout />
+      {/* <h1 onClick={() => setFirst2(!first2)}>{first2.toString()}</h1>
+      <h1 onClick={() => setfirst(first + 2)}>{first}</h1> */}
     </div>
   );
 }

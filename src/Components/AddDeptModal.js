@@ -85,13 +85,19 @@ function AddDeptModal(props) {
     */
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      onAddClick();
+    }
+  };
+
   const onAddClick = () => {
     if (deptObj.deptName !== "") {
       const deptId = new Date().valueOf();
       const temtDept = { ...deptObj, deptId: deptId };
       setDeptDetails([...deptDetails, temtDept]);
+      onClose();
     }
-    onClose();
   };
 
   return (
@@ -103,7 +109,7 @@ function AddDeptModal(props) {
 
         <div style={fieldContainer}>
           <p>
-            Department Name<h4 style={star}>*</h4>:
+            Department Name<span style={star}>*</span>:
           </p>
           <input
             style={inputCssDeptname}
@@ -112,6 +118,7 @@ function AddDeptModal(props) {
             value={deptObj.deptName}
             onChange={(e) => handleChange(e.target.value, "deptName")}
             placeholder="Enter the Department name"
+            onKeyPress={(e) => handleKeyPress(e)}
           />
         </div>
 

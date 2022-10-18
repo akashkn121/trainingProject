@@ -60,12 +60,10 @@ const inputLoc = {
 
 const EditDept = (props) => {
   const { onClose, selectedDeptObj, deptDetails, setDeptDetails } = props;
-  const [tempObj, setTempObj] = useState({});
+  const [tempObj, setTempObj] = useState(selectedDeptObj || {});
 
   const handleChange = (value, fieldName) => {
-    if (value !== "") {
-      setTempObj({ ...tempObj, [fieldName]: value });
-    }
+    setTempObj({ ...tempObj, [fieldName]: value });
   };
 
   const handleClick = () => {
@@ -75,6 +73,12 @@ const EditDept = (props) => {
     const deptArr2 = deptDetails.slice(indexOfSelectedObj + 1) || [];
     setDeptDetails([...deptArr1, newSelectedDeptObj, ...deptArr2]);
     onClose();
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
   };
 
   return (
@@ -87,8 +91,9 @@ const EditDept = (props) => {
             <input
               name="deptName"
               style={inputName}
-              defaultValue={selectedDeptObj.deptName}
+              value={tempObj.deptName}
               onChange={(e) => handleChange(e.target.value, "deptName")}
+              onKeyPress={(e) => handleKeyPress(e)}
             />
           </div>
           <div style={inputField}>
@@ -96,7 +101,7 @@ const EditDept = (props) => {
             <input
               name="managerName"
               style={inputMgr}
-              defaultValue={selectedDeptObj.managerName}
+              value={tempObj.managerName}
               onChange={(e) => handleChange(e.target.value, "managerName")}
             />
           </div>
@@ -105,7 +110,7 @@ const EditDept = (props) => {
             <input
               name="location"
               style={inputLoc}
-              defaultValue={selectedDeptObj.location}
+              value={tempObj.location}
               onChange={(e) => handleChange(e.target.value, "location")}
             />
           </div>

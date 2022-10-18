@@ -75,20 +75,22 @@ const cnlbtn = {
 const EditEmp = (props) => {
   const {
     onClose,
-    editEmpIndex,
     setDeptDetails,
     selectedDeptObj,
+    editedEmpDetail,
     deptDetails,
   } = props;
-  const [tempObj, setTempObj] = useState({});
+  const [tempObj, setTempObj] = useState(editedEmpDetail || {});
   const empArrToEdit = selectedDeptObj.employee;
 
   const handlechange = (value, fieldname) => {
     setTempObj({ ...tempObj, [fieldname]: value });
   };
+
   const handleClick = () => {
-    const empList1 = empArrToEdit.slice(0, editEmpIndex);
-    const empList2 = empArrToEdit.slice(editEmpIndex + 1);
+    const editedEmpindex = empArrToEdit.indexOf(editedEmpDetail);
+    const empList1 = empArrToEdit.slice(0, editedEmpindex);
+    const empList2 = empArrToEdit.slice(editedEmpindex + 1);
     const newEmplist = [...empList1, tempObj, ...empList2];
     const newSelectedDept = { ...selectedDeptObj, employee: newEmplist };
 
@@ -100,6 +102,12 @@ const EditEmp = (props) => {
     onClose();
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
+  };
+
   return (
     <div style={mainContainer}>
       <div style={subContainer}>
@@ -109,16 +117,17 @@ const EditEmp = (props) => {
           <input
             name="empId"
             style={inputId}
-            defaultValue={selectedDeptObj.employee[editEmpIndex].empId}
+            value={tempObj?.empId}
             onChange={(e) => handlechange(e.target.value, "empId")}
+            onKeyPress={(e) => handleKeyPress(e)}
           />
         </div>
         <div style={inputField}>
           <p>Employee Name:</p>
           <input
             name="empName"
+            value={tempObj?.empName}
             style={inputName}
-            defaultValue={selectedDeptObj.employee[editEmpIndex].empName}
             onChange={(e) => handlechange(e.target.value, "empName")}
           />
         </div>
@@ -126,8 +135,8 @@ const EditEmp = (props) => {
           <p>Employee Location:</p>
           <input
             name="empLoc"
+            value={tempObj?.empLoc}
             style={inputLoc}
-            defaultValue={selectedDeptObj.employee[editEmpIndex].empLoc}
             onChange={(e) => handlechange(e.target.value, "empLoc")}
           />
         </div>
@@ -135,8 +144,8 @@ const EditEmp = (props) => {
           <p>Phone Number:</p>
           <input
             name="empPhno"
+            value={tempObj?.empPhno}
             style={inputPhno}
-            defaultValue={selectedDeptObj.employee[editEmpIndex].empPhno}
             onChange={(e) => handlechange(e.target.value, "empPhno")}
           />
         </div>
@@ -144,8 +153,8 @@ const EditEmp = (props) => {
           <p>Email:</p>
           <input
             name="empEmail"
+            value={tempObj?.empEmail}
             style={inputMail}
-            defaultValue={selectedDeptObj.employee[editEmpIndex].empEmail}
             onChange={(e) => handlechange(e.target.value, "empEmail")}
           />
         </div>

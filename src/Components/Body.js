@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import AddEmployee from "./AddEmployee";
+import React, { useState, useEffect } from "react";
+import AddEmployeeModal from "./AddEmployeeModal";
 import EditDept from "./EditDept";
 import EditEmp from "./EditEmp";
 
@@ -87,11 +87,20 @@ const tableCss = {
     border: "1px solid",
     padding: "8px",
     textAlign: "left",
+    width: "16%",
   },
   tabHeader: {
     border: "1px solid",
     padding: "8px",
     textAlign: "left",
+  },
+  btn: {
+    marginLeft: "30px",
+  },
+  tbHeading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 };
 
@@ -99,13 +108,10 @@ const Body = (props) => {
   const { selectedDeptId, deptDetails, setDeptDetails, setSelectedDeptId } =
     props;
   const [showEmpModal, setShowEmpModal] = useState(false);
-  const [delEmpIndex, setDelEmpIndex] = useState(null);
-  const [showEmpEdit, setShowEmpEdit] = useState(false);
-  const [dailogOpen, setDailogOpen] = useState(false);
-  const [editEmpIndex, setEditEmpIndex] = useState(null);
+  const [showEmpEdit, setShowEmpEdit] = useState(null);
   const [openEditDeptDetails, onDeptEdit] = useState(false);
 
-  const selectedDeptObj = deptDetails.find(
+  let selectedDeptObj = deptDetails.find(
     (item) => item.deptId === selectedDeptId
   );
 
@@ -117,15 +123,10 @@ const Body = (props) => {
     setSelectedDeptId(null);
   };
 
-  const handleOnClick = (index) => {
-    setDailogOpen(true);
-    setDelEmpIndex(index);
-  };
-
-  const delEmp = () => {
+  const delEmp = (index) => {
     const toDel = selectedDeptObj.employee || [];
-    const selectedDeptObj1 = toDel.slice(0, delEmpIndex);
-    const selectedDeptObj2 = toDel.slice(delEmpIndex + 1);
+    const selectedDeptObj1 = toDel.slice(0, index);
+    const selectedDeptObj2 = toDel.slice(index + 1);
     const newSelectedEmpObj = [...selectedDeptObj1, ...selectedDeptObj2];
     const newSelectedDept = { ...selectedDeptObj, employee: newSelectedEmpObj };
 
@@ -134,12 +135,24 @@ const Body = (props) => {
     const deptArr1 = deptDetails.slice(0, selectedIndex);
     const deptArr2 = deptDetails.slice(selectedIndex + 1);
     setDeptDetails([...deptArr1, newSelectedDept, ...deptArr2]);
-    setDailogOpen(false);
   };
 
-  const editEmp = (index) => {
-    setShowEmpEdit(true);
-    setEditEmpIndex(index);
+  const editEmp = (empObj) => {
+    setShowEmpEdit(empObj);
+  };
+
+  const sortEmpDetails = () => {
+    const sortedArr = selectedDeptObj.employee.sort((a, b) =>
+      a.empName > b.empName ? 1 : -1
+    );
+
+    const indexToSort = deptDetails.indexOf(selectedDeptObj);
+
+    const newSelectedDept = [(deptDetails[indexToSort].employee = sortedArr)];
+    debugger;
+    // const deptArr1 = deptDetails.slice(0, selectedIndex);
+    // const deptArr2 = deptDetails.slice(selectedIndex + 1);
+    setDeptDetails(newSelectedDept);
   };
 
   return (
@@ -166,7 +179,7 @@ const Body = (props) => {
           </li>
 
           <li style={styleObj.lists}>
-            <b>Location :</b>{" "}
+            <b>Location :</b>
             <span style={styleObj.loc}>{selectedDeptObj.location}</span>
           </li>
 
@@ -186,7 +199,7 @@ const Body = (props) => {
       </div>
 
       {showEmpModal && (
-        <AddEmployee
+        <AddEmployeeModal
           onClose={() => setShowEmpModal(false)}
           deptDetails={deptDetails}
           setDeptDetails={setDeptDetails}
@@ -197,7 +210,25 @@ const Body = (props) => {
       )}
 
       <div style={tableCss.tableDisplay}>
-        <h3>Employee Details</h3>
+        <div style={tableCss.tbHeading}>
+          <h3>Employee Details</h3>
+          <div style={{ width: "40px", height: "40px" }}>
+            <button
+              style={{ width: "30px", height: "30px" }}
+              onClick={() => sortEmpDetails()}
+            >
+              <svg
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiBox-root css-134msul"
+                focusable="false"
+                aria-hidden="true"
+                viewBox="0 0 24 24"
+                data-testid="SortByAlphaIcon"
+              >
+                <path d="M14.94 4.66h-4.72l2.36-2.36zm-4.69 14.71h4.66l-2.33 2.33zM6.1 6.27 1.6 17.73h1.84l.92-2.45h5.11l.92 2.45h1.84L7.74 6.27H6.1zm-1.13 7.37 1.94-5.18 1.94 5.18H4.97zm10.76 2.5h6.12v1.59h-8.53v-1.29l5.92-8.56h-5.88v-1.6h8.3v1.26l-5.93 8.6z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
         <table style={tableCss.table}>
           <tr>
             <th style={tableCss.tabHeader}>Id</th>
@@ -209,39 +240,40 @@ const Body = (props) => {
           </tr>
           {selectedDeptObj.employee.map((item, index) => (
             <tr>
-              <td style={tableCss.tabData} key={index}>
+              <td style={tableCss.tabData} key={"empId"}>
                 {item.empId}
               </td>
-              <td style={tableCss.tabData} key={index}>
+              <td style={tableCss.tabData} key={"empName"}>
                 {item.empName}
               </td>
-              <td style={tableCss.tabData} key={index}>
+              <td style={tableCss.tabData} key={"empLoc"}>
                 {item.empLoc}
               </td>
-              <td style={tableCss.tabData} key={index}>
+              <td style={tableCss.tabData} key={"empPhno"}>
                 {item.empPhno}
               </td>
-              <td style={tableCss.tabData} key={index}>
+              <td style={tableCss.tabData} key={"empEmail"}>
                 {item.empEmail}
               </td>
-              <td style={tableCss.tabData} key={index}>
-                <button onClick={() => editEmp(index)}>Edit</button>
-                <button onClick={() => handleOnClick(index)}>Delete</button>
+              <td style={tableCss.tabData} key={"button"}>
+                <button onClick={() => editEmp(item)} style={tableCss.btn}>
+                  Edit
+                </button>
+                <button onClick={() => delEmp(index)} style={tableCss.btn}>
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
         </table>
-        <dialog open={dailogOpen} style={styleObj.dailog}>
-          <button onClick={() => delEmp()}>confirm</button>
-        </dialog>
       </div>
 
       {showEmpEdit && (
         <EditEmp
-          onClose={() => setShowEmpEdit(false)}
-          editEmpIndex={editEmpIndex}
+          onClose={() => setShowEmpEdit(null)}
           setDeptDetails={setDeptDetails}
           selectedDeptObj={selectedDeptObj}
+          editedEmpDetail={showEmpEdit}
           deptDetails={deptDetails}
         />
       )}

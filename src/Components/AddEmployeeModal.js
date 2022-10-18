@@ -17,7 +17,7 @@ const mainContainer = {
 const subContainer = {
   backgroundColor: "white",
   margin: "auto",
-  width: "40%",
+  width: "max-content",
   padding: "20px",
   height: "max-content",
   display: "flex",
@@ -85,7 +85,7 @@ const buttons = {
   justifyContent: "space-between",
 };
 
-const AddEmployee = (props) => {
+const AddEmployeeModal = (props) => {
   const { onClose, deptDetails, setDeptDetails, selectedDeptObj } = props;
   const [empObj, setempObj] = useState({});
 
@@ -100,6 +100,12 @@ const AddEmployee = (props) => {
 
     setDeptDetails([...deptArr1, newSelectedDeptObj, ...deptArr2]);
     onClose();
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
   };
 
   const handleChange = (value, fieldName) => {
@@ -118,6 +124,7 @@ const AddEmployee = (props) => {
             value={empObj.empId}
             style={inputId}
             onChange={(e) => handleChange(e.target.value, "empId")}
+            onKeyPress={(e) => handleKeyPress(e)}
           />
         </div>
 
@@ -177,4 +184,4 @@ const AddEmployee = (props) => {
     </div>
   );
 };
-export default AddEmployee;
+export default AddEmployeeModal;
