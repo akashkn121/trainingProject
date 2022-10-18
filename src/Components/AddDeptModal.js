@@ -67,7 +67,7 @@ const btnCancel = {
   backgroundColor: "red",
 };
 
-function Modal(props) {
+function AddDeptModal(props) {
   const { onClose, setDeptDetails, deptDetails } = props;
   const [deptObj, setDeptObj] = useState({
     managerName: "",
@@ -152,4 +152,4 @@ function Modal(props) {
   );
 }
 
-export default Modal;
+export default AddDeptModal;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Modal from "./Modal";
+import AddDeptModal from "./AddDeptModal";
 
 const styleObj = {
   mainBar: {
@@ -51,7 +51,7 @@ const SideBar = ({ deptDetails, setDeptDetails, setSelectedDeptId }) => {
       </div>
 
       {showModal && (
-        <Modal
+        <AddDeptModal
           onClose={() => setShowModal(false)}
           setDeptDetails={setDeptDetails}
           deptDetails={deptDetails}
