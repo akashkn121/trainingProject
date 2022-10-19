@@ -110,6 +110,7 @@ const Body = (props) => {
   const [showEmpModal, setShowEmpModal] = useState(false);
   const [showEmpEdit, setShowEmpEdit] = useState(null);
   const [openEditDeptDetails, onDeptEdit] = useState(false);
+  const [sortEmpDetl, setSortEmpdetl] = useState(false);
 
   let selectedDeptObj = deptDetails.find(
     (item) => item.deptId === selectedDeptId
@@ -141,19 +142,17 @@ const Body = (props) => {
     setShowEmpEdit(empObj);
   };
 
-  const sortEmpDetails = () => {
+  useEffect(() => {
     const sortedArr = selectedDeptObj.employee.sort((a, b) =>
       a.empName > b.empName ? 1 : -1
     );
+    const newSelectedDept = { ...selectedDeptObj, employee: sortedArr };
 
-    const indexToSort = deptDetails.indexOf(selectedDeptObj);
-
-    const newSelectedDept = [(deptDetails[indexToSort].employee = sortedArr)];
-    debugger;
-    // const deptArr1 = deptDetails.slice(0, selectedIndex);
-    // const deptArr2 = deptDetails.slice(selectedIndex + 1);
-    setDeptDetails(newSelectedDept);
-  };
+    const selectedIndex = deptDetails.indexOf(selectedDeptObj);
+    const deptArr1 = deptDetails.slice(0, selectedIndex);
+    const deptArr2 = deptDetails.slice(selectedIndex + 1);
+    setDeptDetails([...deptArr1, newSelectedDept, ...deptArr2]);
+  }, [sortEmpDetl]);
 
   return (
     <div style={styleObj.body}>
@@ -215,7 +214,7 @@ const Body = (props) => {
           <div style={{ width: "40px", height: "40px" }}>
             <button
               style={{ width: "30px", height: "30px" }}
-              onClick={() => sortEmpDetails()}
+              onClick={() => setSortEmpdetl(!sortEmpDetl)}
             >
               <svg
                 class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiBox-root css-134msul"
