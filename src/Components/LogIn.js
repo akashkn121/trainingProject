@@ -49,7 +49,9 @@ const LogIn = ({ userDetails, setUserDetails }) => {
   );
 
   const handleClick = () => {
-    if (selectedUser[0].password === userToLogIn.password) {
+    if (userToLogIn.emailId === "" || userToLogIn.password === "") {
+      alert(" EmailId and Password should not be empty");
+    } else if (selectedUser[0].password === userToLogIn.password) {
       setLogIn(true);
     } else {
       alert("Invalid EmailId or Password");
