@@ -141,17 +141,24 @@ const Body = (props) => {
   const editEmp = (empObj) => {
     setShowEmpEdit(empObj);
   };
-
   useEffect(() => {
-    const sortedArr = selectedDeptObj.employee.sort((a, b) =>
-      a.empName > b.empName ? 1 : -1
-    );
+    let sortedArr = null;
+
+    if (sortEmpDetl) {
+      sortedArr = selectedDeptObj.employee.sort((a, b) =>
+        a.empName > b.empName ? 1 : -1
+      );
+    } else {
+      sortedArr = selectedDeptObj.employee.sort((a, b) =>
+        a.empName < b.empName ? 1 : -1
+      );
+    }
+
     const newSelectedDept = { ...selectedDeptObj, employee: sortedArr };
 
     const selectedIndex = deptDetails.indexOf(selectedDeptObj);
-    const deptArr1 = deptDetails.slice(0, selectedIndex);
-    const deptArr2 = deptDetails.slice(selectedIndex + 1);
-    setDeptDetails([...deptArr1, newSelectedDept, ...deptArr2]);
+    const newDept = deptDetails.splice(selectedIndex, 1, newSelectedDept);
+    setDeptDetails(newDept);
   }, [sortEmpDetl]);
 
   return (
