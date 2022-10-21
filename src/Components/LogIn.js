@@ -44,12 +44,18 @@ const logInCss = {
   },
 };
 
-const LogIn = ({ userDetails }) => {
+const LogIn = ({ userDetails, setUserUsing }) => {
   const history = useHistory();
   const [userToLogIn, setUserToLogIn] = useState({ emailId: "", password: "" });
 
   const handleChange = (value, fieldName) => {
     setUserToLogIn({ ...userToLogIn, [fieldName]: value });
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
   };
 
   const handleClick = () => {
@@ -61,6 +67,7 @@ const LogIn = ({ userDetails }) => {
           item.emailId === userToLogIn.emailId &&
           item.password === userToLogIn.password
       );
+      setUserUsing(selectedUser);
 
       selectedUser.length > 0
         ? history.push("/home")
@@ -86,6 +93,7 @@ const LogIn = ({ userDetails }) => {
             type="password"
             value={userToLogIn.password}
             onChange={(e) => handleChange(e.target.value, "password")}
+            onKeyPress={(event) => handleKeyPress(event)}
           />
         </div>
         <h4 style={{ color: "purple" }}>Did you signup?</h4>

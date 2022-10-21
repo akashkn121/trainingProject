@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const headerCss = {
   subContainer: {
@@ -12,8 +13,9 @@ const headerCss = {
   },
 };
 const Header = () => {
+  const history = useHistory();
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <ul style={headerCss.subContainer}>
         <li>
           <Link to="/about" style={{ textDecoration: "none", color: "black" }}>
@@ -29,6 +31,9 @@ const Header = () => {
           </Link>
         </li>
       </ul>
+      <div>
+        <button onClick={() => history.push("/profileDetails")}>Profile</button>
+      </div>
     </div>
   );
 };

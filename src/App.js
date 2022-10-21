@@ -5,15 +5,17 @@ import SignUp from "./Components/SignUp";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { useState } from "react";
 import Layout from "./Components/Layout";
+import ProfileDetails from "./Components/ProfileDetails";
 
 function App() {
   const [userDetails, setUserDetails] = useState([]);
+  const [userUsing, setUserUsing] = useState({});
   return (
     <div>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <LogIn userDetails={userDetails} setUserDetails={setUserDetails} />
+            <LogIn userDetails={userDetails} setUserUsing={setUserUsing} />
           </Route>
           <Route path="/signUp">
             <SignUp setUserDetails={setUserDetails} userDetails={userDetails} />
@@ -21,6 +23,9 @@ function App() {
           <Route path="/home" component={Layout} />
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
+          <Route path="/profileDetails">
+            <ProfileDetails userUsing={userUsing} />
+          </Route>
         </Switch>
       </BrowserRouter>
     </div>

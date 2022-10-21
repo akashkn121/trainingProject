@@ -55,6 +55,12 @@ const SignUp = ({ setUserDetails, userDetails }) => {
     setTempObj({ ...tempObj, [fieldName]: value });
   };
 
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleClick();
+    }
+  };
+
   const handleClick = () => {
     if (tempObj.emailId !== "" && tempObj.password !== "") {
       setUserDetails([...userDetails, tempObj]);
@@ -67,13 +73,14 @@ const SignUp = ({ setUserDetails, userDetails }) => {
   return (
     <div style={signUpCss.main}>
       <div style={signUpCss.subContainer}>
-        <h3 style={{ color: "cadetblue" }}>Sign Up First!</h3>
+        <h3 style={{ color: "blueviolet" }}>Sign Up First!</h3>
         <div style={signUpCss.inputContent}>
           <p>UserName</p>
           <input
             type="text"
             value={tempObj.userName}
             onChange={(e) => handleChange(e.target.value, "userName")}
+            onKeyPress={(event) => handleKeyPress(event)}
           />
         </div>
         <div style={signUpCss.inputContent}>
@@ -82,6 +89,7 @@ const SignUp = ({ setUserDetails, userDetails }) => {
             type="text"
             value={tempObj.emailId}
             onChange={(e) => handleChange(e.target.value, "emailId")}
+            onKeyPress={(event) => handleKeyPress(event)}
           />
         </div>
         <div style={signUpCss.inputContent}>
@@ -90,6 +98,7 @@ const SignUp = ({ setUserDetails, userDetails }) => {
             type="password"
             value={tempObj.password}
             onChange={(e) => handleChange(e.target.value, "password")}
+            onKeyPress={(event) => handleKeyPress(event)}
           />
         </div>
         <div style={signUpCss.buttons}>
