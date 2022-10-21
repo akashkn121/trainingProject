@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const signUpCss = {
   main: {
@@ -16,8 +16,8 @@ const signUpCss = {
   },
   subContainer: {
     backgroundColor: "wheat",
-    width: "31%",
-    padding: "50px",
+    width: "29%",
+    padding: "30px",
   },
   inputContent: {
     display: "flex",
@@ -29,9 +29,22 @@ const signUpCss = {
     justifyContent: "space-between",
     paddingTop: "10px",
   },
+  cnlBtn: {
+    backgroundColor: "#f76f6f",
+    height: "30px",
+    width: "70px",
+    borderRadius: "10px",
+  },
+  sbtBtn: {
+    backgroundColor: "limeGreen",
+    height: "30px",
+    width: "70px",
+    borderRadius: "10px",
+  },
 };
 
-const SignUp = ({ setUserDetails, userDetails, onClose }) => {
+const SignUp = ({ setUserDetails, userDetails }) => {
+  const history = useHistory();
   const [tempObj, setTempObj] = useState({
     userName: "",
     emailId: "",
@@ -45,7 +58,7 @@ const SignUp = ({ setUserDetails, userDetails, onClose }) => {
   const handleClick = () => {
     if (tempObj.emailId !== "" && tempObj.password !== "") {
       setUserDetails([...userDetails, tempObj]);
-      onClose();
+      history.push("/");
     } else {
       alert("enter Email and Password");
     }
@@ -54,6 +67,7 @@ const SignUp = ({ setUserDetails, userDetails, onClose }) => {
   return (
     <div style={signUpCss.main}>
       <div style={signUpCss.subContainer}>
+        <h3 style={{ color: "cadetblue" }}>Sign Up First!</h3>
         <div style={signUpCss.inputContent}>
           <p>UserName</p>
           <input
@@ -79,8 +93,12 @@ const SignUp = ({ setUserDetails, userDetails, onClose }) => {
           />
         </div>
         <div style={signUpCss.buttons}>
-          <button onClick={() => onClose()}>Cancel</button>
-          <button onClick={() => handleClick()}>Submit</button>
+          <button onClick={() => history.push("/")} style={signUpCss.cnlBtn}>
+            Cancel
+          </button>
+          <button onClick={() => handleClick()} style={signUpCss.sbtBtn}>
+            Submit
+          </button>
         </div>
       </div>
     </div>

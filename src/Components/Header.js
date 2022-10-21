@@ -16,11 +16,6 @@ const Header = () => {
     <div>
       <ul style={headerCss.subContainer}>
         <li>
-          <Link to="/home" style={{ textDecoration: "none", color: "black" }}>
-            Home
-          </Link>
-        </li>
-        <li>
           <Link to="/about" style={{ textDecoration: "none", color: "black" }}>
             About
           </Link>
