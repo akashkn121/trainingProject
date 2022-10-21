@@ -11,6 +11,9 @@ const headerCss = {
     padding: "10px",
     width: "30%",
   },
+  profBtn: {
+    marginLeft: "800px",
+  },
 };
 const Header = () => {
   const history = useHistory();
@@ -32,7 +35,12 @@ const Header = () => {
         </li>
       </ul>
       <div>
-        <button onClick={() => history.push("/profileDetails")}>Profile</button>
+        <button
+          onClick={() => history.push("/profileDetails")}
+          style={headerCss.profBtn}
+        >
+          Profile
+        </button>
       </div>
     </div>
   );
