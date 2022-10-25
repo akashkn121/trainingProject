@@ -197,7 +197,11 @@ const Body = (props) => {
               </span>
             </li>
 
-            <button style={styleObj.btn} onClick={() => setShowEmpModal(true)}>
+            <button
+              style={styleObj.btn}
+              onClick={() => setShowEmpModal(true)}
+              onMouseOver={{ backgroundColor: "white" }}
+            >
               Add Employee
             </button>
           </div>
@@ -220,7 +224,7 @@ const Body = (props) => {
           <h3>Employee Details</h3>
           <div style={{ width: "40px", height: "40px" }}>
             <button
-              style={{ width: "30px", height: "30px" }}
+              style={{ width: "40px", height: "40px" }}
               onClick={() => setSortEmpdetl(!sortEmpDetl)}
             >
               <svg
