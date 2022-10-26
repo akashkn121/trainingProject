@@ -3,22 +3,24 @@ import Contact from "./Components/Contact";
 import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useState } from "react";
+import React, { createContext, useState } from "react";
 import Layout from "./Components/Layout";
 import ProfileDetails from "./Components/ProfileDetails";
 
+export const myContext = createContext();
+
 function App() {
-  const [userDetails, setUserDetails] = useState([]);
   const [userUsing, setUserUsing] = useState({});
+
   return (
-    <div>
+    <>
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <LogIn userDetails={userDetails} setUserUsing={setUserUsing} />
+            <LogIn setUserUsing={setUserUsing} />
           </Route>
           <Route path="/signUp">
-            <SignUp setUserDetails={setUserDetails} userDetails={userDetails} />
+            <SignUp />
           </Route>
           <Route path="/home" component={Layout} />
           <Route path="/about" component={About} />
@@ -28,7 +30,7 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
-    </div>
+    </>
   );
 }
 

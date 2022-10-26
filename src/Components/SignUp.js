@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Box, Typography, TextField, Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addUser } from "./redux/action/login";
 
 const signUpCss = {
   main: {
@@ -19,32 +22,17 @@ const signUpCss = {
     width: "29%",
     padding: "30px",
   },
-  inputContent: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+
   buttons: {
     display: "flex",
     justifyContent: "space-between",
     paddingTop: "10px",
   },
-  cnlBtn: {
-    backgroundColor: "#f76f6f",
-    height: "30px",
-    width: "70px",
-    borderRadius: "10px",
-  },
-  sbtBtn: {
-    backgroundColor: "limeGreen",
-    height: "30px",
-    width: "70px",
-    borderRadius: "10px",
-  },
 };
 
 const SignUp = ({ setUserDetails, userDetails }) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [tempObj, setTempObj] = useState({
     userName: "",
     emailId: "",
@@ -63,7 +51,10 @@ const SignUp = ({ setUserDetails, userDetails }) => {
 
   const handleClick = () => {
     if (tempObj.emailId !== "" && tempObj.password !== "") {
-      setUserDetails([...userDetails, tempObj]);
+      // setUserDetails([...userDetails, tempObj]);
+      debugger;
+      dispatch(addUser(tempObj));
+
       history.push("/");
     } else {
       alert("enter Email and Password");
@@ -71,46 +62,51 @@ const SignUp = ({ setUserDetails, userDetails }) => {
   };
 
   return (
-    <div style={signUpCss.main}>
-      <div style={signUpCss.subContainer}>
-        <h3 style={{ color: "blueviolet" }}>Sign Up First!</h3>
-        <div style={signUpCss.inputContent}>
-          <p>UserName</p>
-          <input
-            type="text"
-            value={tempObj.userName}
-            onChange={(e) => handleChange(e.target.value, "userName")}
-            onKeyPress={(event) => handleKeyPress(event)}
-          />
-        </div>
-        <div style={signUpCss.inputContent}>
-          <p>EmailId</p>
-          <input
-            type="text"
-            value={tempObj.emailId}
-            onChange={(e) => handleChange(e.target.value, "emailId")}
-            onKeyPress={(event) => handleKeyPress(event)}
-          />
-        </div>
-        <div style={signUpCss.inputContent}>
-          <p>Password</p>
-          <input
-            type="password"
-            value={tempObj.password}
-            onChange={(e) => handleChange(e.target.value, "password")}
-            onKeyPress={(event) => handleKeyPress(event)}
-          />
-        </div>
-        <div style={signUpCss.buttons}>
-          <button onClick={() => history.push("/")} style={signUpCss.cnlBtn}>
+    <Box sx={signUpCss.main}>
+      <Box sx={signUpCss.subContainer}>
+        <Typography variant="h5" sx={{ color: "blueviolet" }}>
+          Sign Up First!
+        </Typography>
+        <TextField
+          variant="outlined"
+          label="User Name"
+          sx={{ width: "400px", marginTop: "10px" }}
+          value={tempObj.userName}
+          onChange={(e) => handleChange(e.target.value, "userName")}
+          onKeyPress={(event) => handleKeyPress(event)}
+        />
+        <TextField
+          label="Email Id"
+          sx={{ width: "400px", marginTop: "10px" }}
+          value={tempObj.emailId}
+          onChange={(e) => handleChange(e.target.value, "emailId")}
+          onKeyPress={(event) => handleKeyPress(event)}
+        />
+        <TextField
+          label="Password"
+          sx={{ width: "400px", marginTop: "10px" }}
+          value={tempObj.password}
+          onChange={(e) => handleChange(e.target.value, "password")}
+          onKeyPress={(event) => handleKeyPress(event)}
+        />
+        <Box sx={signUpCss.buttons}>
+          <Button
+            onClick={() => history.push("/")}
+            variant="outlined"
+            sx={{ color: "red" }}
+          >
             Cancel
-          </button>
-          <button onClick={() => handleClick()} style={signUpCss.sbtBtn}>
+          </Button>
+          <Button
+            onClick={() => handleClick()}
+            variant="outlined"
+            sx={{ color: "green" }}
+          >
             Submit
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 export default SignUp;

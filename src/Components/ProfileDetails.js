@@ -1,18 +1,14 @@
-import React from "react";
+// import React, { useContext } from "react";
+// import { myContext } from "../App";
 const main = {
-  position: "fixed",
-  zIndex: "1",
-  right: "0",
-  top: "0",
-  width: "20%",
-  listStyle: "none",
   paddingTop: "30px",
-  border: "1px solid",
-  height: "100vh",
   padding: "5px",
+  display: "flex",
+  justyfyContent: "center",
 };
 
 function ProfileDetails({ userUsing }) {
+  // const contextData = useContext(myContext);
   return (
     <div style={main}>
       <li>

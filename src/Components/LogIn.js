@@ -1,5 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { Box, Typography, TextField, Button } from "@mui/material";
+import { useSelector } from "react-redux";
+import { getUserList } from "./redux/reducer/login";
+// import { getUser } from "./redux/action/login";
 
 const logInCss = {
   main: {
@@ -10,16 +14,6 @@ const logInCss = {
     justifyContent: "center",
     alignItems: "center",
   },
-  userId: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  psswrd: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
   formStyle: {
     backgroundColor: "lightyellow",
     height: "max-content",
@@ -28,24 +22,16 @@ const logInCss = {
   },
   buttons: {
     display: "flex",
-    justifyContent: "space-between",
-  },
-  signUpBtn: {
-    backgroundColor: "salmon",
-    height: "30px",
-    width: "70px",
-    borderRadius: "10px",
-  },
-  logInBtn: {
-    backgroundColor: "limeGreen",
-    height: "30px",
-    width: "70px",
-    borderRadius: "10px",
+    alignItems: "center",
+    marginTop: "10px",
   },
 };
 
-const LogIn = ({ userDetails, setUserUsing }) => {
+const LogIn = () => {
   const history = useHistory();
+  // const dispatch = useDispatch();
+  const userLists = useSelector(getUserList);
+  // const userLists_2 = useDispatch(getUser);
   const [userToLogIn, setUserToLogIn] = useState({ emailId: "", password: "" });
 
   const handleChange = (value, fieldName) => {
@@ -62,12 +48,12 @@ const LogIn = ({ userDetails, setUserUsing }) => {
     if (userToLogIn.emailId === "" || userToLogIn.password === "") {
       alert(" EmailId and Password should not be empty");
     } else {
-      const selectedUser = userDetails.filter(
+      const selectedUser = userLists.filter(
         (item) =>
           item.emailId === userToLogIn.emailId &&
           item.password === userToLogIn.password
       );
-      setUserUsing(selectedUser);
+      // setUserUsing(selectedUser);
 
       selectedUser.length > 0
         ? history.push("/home")
@@ -76,40 +62,50 @@ const LogIn = ({ userDetails, setUserUsing }) => {
   };
 
   return (
-    <div style={logInCss.main}>
-      <div style={logInCss.formStyle}>
-        <h3 style={{ color: "purple" }}>Log In Here!</h3>
-        <div style={logInCss.userId}>
-          <p>Email Id:</p>
-          <input
-            type="text"
-            value={userToLogIn.emailId}
-            onChange={(e) => handleChange(e.target.value, "emailId")}
-          />
-        </div>
-        <div style={logInCss.psswrd}>
-          <p>Password:</p>
-          <input
-            type="password"
-            value={userToLogIn.password}
-            onChange={(e) => handleChange(e.target.value, "password")}
-            onKeyPress={(event) => handleKeyPress(event)}
-          />
-        </div>
-        <h4 style={{ color: "purple" }}>Did you signup?</h4>
-        <div style={logInCss.buttons}>
-          <button
+    <Box sx={logInCss.main}>
+      <Box sx={logInCss.formStyle}>
+        <Typography sx={{ color: "purple" }} variant="h5">
+          Log In Here!
+        </Typography>
+        <TextField
+          label="EmailId:"
+          variant="outlined"
+          sx={{ marginTop: "10px", width: "315px" }}
+          value={userToLogIn.emailId}
+          onChange={(e) => handleChange(e.target.value, "emailId")}
+        />
+
+        <TextField
+          label="Password"
+          variant="outlined"
+          sx={{ marginTop: "10px", width: "315px" }}
+          value={userToLogIn.password}
+          onChange={(e) => handleChange(e.target.value, "password")}
+          onKeyPress={(event) => handleKeyPress(event)}
+        />
+
+        <Box sx={logInCss.buttons}>
+          <Button
+            variant="outlined"
+            sx={{ color: "blue", height: "25px" }}
             onClick={() => history.push("/signUp")}
-            style={logInCss.signUpBtn}
           >
             Sign Up
-          </button>
-          <button onClick={() => handleClick()} style={logInCss.logInBtn}>
-            Log In
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+          <Button
+            variant="text"
+            sx={{ color: "green" }}
+            onClick={() => handleClick()}
+            underline="hover"
+          >
+            <u> Log In</u>
+          </Button>
+        </Box>
+        <Typography sx={{ color: "purple" }} varient="h4">
+          Did you signup?
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 export default LogIn;

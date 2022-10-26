@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import AddEmployeeModal from "./AddEmployeeModal";
 import EditDept from "./EditDept";
 import EditEmp from "./EditEmp";
+import { Box, Typography, TextField, Button } from "@mui/material";
 
 const styleObj = {
   list: {
@@ -162,10 +163,10 @@ const Body = (props) => {
   }, [sortEmpDetl]);
 
   return (
-    <div style={styleObj.body}>
-      <div>
+    <Box sx={styleObj.body}>
+      <Box>
         <ul style={styleObj.list}>
-          <div style={styleObj.deptDetailsEditor}>
+          <Box sx={styleObj.deptDetailsEditor}>
             <h3>Department Details</h3>
             <button style={styleObj.delbtn} onClick={() => onDeptDelete()}>
               Delete
@@ -173,7 +174,7 @@ const Body = (props) => {
             <button style={styleObj.edtbtn} onClick={() => onDeptEdit(true)}>
               Edit
             </button>
-          </div>
+          </Box>
           <li>
             <b>Department Name :</b>
             <span style={styleObj.dName}>{selectedDeptObj.deptName}</span>
@@ -206,7 +207,7 @@ const Body = (props) => {
             </button>
           </div>
         </ul>
-      </div>
+      </Box>
 
       {showEmpModal && (
         <AddEmployeeModal
@@ -295,7 +296,7 @@ const Body = (props) => {
           setDeptDetails={setDeptDetails}
         />
       )}
-    </div>
+    </Box>
   );
 };
 
