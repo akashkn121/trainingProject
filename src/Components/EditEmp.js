@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { editData } from "./redux/action/department";
+import { getDeptList } from "./redux/reducer/deparment";
 const mainContainer = {
   zIndex: "1",
   position: "fixed",
@@ -73,13 +76,9 @@ const cnlbtn = {
 };
 
 const EditEmp = (props) => {
-  const {
-    onClose,
-    setDeptDetails,
-    selectedDeptObj,
-    editedEmpDetail,
-    deptDetails,
-  } = props;
+  const { onClose, selectedDeptObj, editedEmpDetail } = props;
+  const deptDetails = useSelector(getDeptList);
+  const dispatch = useDispatch();
   const [tempObj, setTempObj] = useState(editedEmpDetail || {});
   const empArrToEdit = selectedDeptObj.employee;
 
@@ -98,7 +97,7 @@ const EditEmp = (props) => {
 
     const deptArr1 = deptDetails.slice(0, selectedIndex);
     const deptArr2 = deptDetails.slice(selectedIndex + 1);
-    setDeptDetails([...deptArr1, newSelectedDept, ...deptArr2]);
+    dispatch(editData([...deptArr1, newSelectedDept, ...deptArr2]));
     onClose();
   };
 

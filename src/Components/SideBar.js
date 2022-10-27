@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import AddDeptModal from "./AddDeptModal";
+import { useSelector } from "react-redux";
+import { getDeptList } from "./redux/reducer/deparment";
 
 const styleObj = {
   mainBar: {
@@ -24,8 +26,8 @@ const styleObj = {
   },
 };
 
-const SideBar = ({ deptDetails, setDeptDetails, setSelectedDeptId }) => {
-  // const { deptDetails, setDeptDetails, setSelectedDeptId } = props;
+const SideBar = ({ setSelectedDeptId }) => {
+  const deptDetails = useSelector(getDeptList);
   const [showModal, setShowModal] = useState(false);
 
   return (
@@ -50,13 +52,7 @@ const SideBar = ({ deptDetails, setDeptDetails, setSelectedDeptId }) => {
         </button>
       </div>
 
-      {showModal && (
-        <AddDeptModal
-          onClose={() => setShowModal(false)}
-          setDeptDetails={setDeptDetails}
-          deptDetails={deptDetails}
-        />
-      )}
+      {showModal && <AddDeptModal onClose={() => setShowModal(false)} />}
     </div>
   );
 };

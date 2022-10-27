@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { getDeptList } from "./redux/reducer/deparment";
+import { editData } from "./redux/action/department";
 
 const mainContainer = {
   position: "fixed",
@@ -58,8 +61,9 @@ const inputLoc = {
   height: "30px",
 };
 
-const EditDept = (props) => {
-  const { onClose, selectedDeptObj, deptDetails, setDeptDetails } = props;
+const EditDept = ({ onClose, selectedDeptObj }) => {
+  const deptDetails = useSelector(getDeptList);
+  const dispatch = useDispatch();
   const [tempObj, setTempObj] = useState(selectedDeptObj || {});
 
   const handleChange = (value, fieldName) => {
@@ -71,7 +75,8 @@ const EditDept = (props) => {
     const newSelectedDeptObj = { ...selectedDeptObj, ...tempObj };
     const deptArr1 = deptDetails.slice(0, indexOfSelectedObj) || [];
     const deptArr2 = deptDetails.slice(indexOfSelectedObj + 1) || [];
-    setDeptDetails([...deptArr1, newSelectedDeptObj, ...deptArr2]);
+    const newEditedDept = [...deptArr1, newSelectedDeptObj, ...deptArr2];
+    dispatch(editData(newEditedDept));
     onClose();
   };
 

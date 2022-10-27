@@ -1,4 +1,4 @@
-import { CREATE_USER, GET_USER } from "./../const";
+import { CREATE_USER, LOGGED_USER } from "./../const";
 
 export const addUser = (data) => {
   return {
@@ -7,9 +7,9 @@ export const addUser = (data) => {
   };
 };
 
-export const getUser = () => {
+export const loggedUser = (data) => {
   return {
-    type: GET_USER,
-    payload: null,
+    type: LOGGED_USER,
+    payload: data,
   };
 };

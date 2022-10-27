@@ -1,19 +1,20 @@
-import { CREATE_USER, GET_USER } from "./../const";
+import { CREATE_USER, LOGGED_USER } from "./../const";
 
 const initialState = {
   userLists: [],
+  loggedUser: [],
 };
 
 const loginReducer = (state = initialState, action) => {
   const actionType = action.type;
+  const data = action.payload;
 
   switch (actionType) {
     case CREATE_USER:
-      const data = action.payload;
-      return (state.userLists = [...state.userLists, data]);
+      return { userLists: [...state.userLists, data] };
 
-    case GET_USER:
-      return state.userLists;
+    case LOGGED_USER:
+      return { loggedUser: data[0] };
 
     default:
       return state;
@@ -24,4 +25,8 @@ export default loginReducer;
 
 export const getUserList = (state) => {
   return state.loginReducer.userLists;
+};
+
+export const getloggedUser = (state) => {
+  return state.loginReducer.loggedUser;
 };

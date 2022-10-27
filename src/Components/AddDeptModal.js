@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { Box, Typography, TextField, Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addDept } from "./redux/action/department";
 
 const styleObj = {
   list: {
@@ -21,7 +24,7 @@ const styleObj = {
   modalContent: {
     backgroundColor: "white",
     margin: "auto",
-    width: "46%",
+    width: "37%",
     padding: "20px",
     height: "max-content",
     border: "1px solid gray",
@@ -31,44 +34,12 @@ const styleObj = {
   btnInModalContent: {
     display: "flex",
     justifyContent: "space-between",
+    marginTop: "20px",
   },
 };
-const star = {
-  color: "red",
-  display: "inline-flex",
-};
-const inputCssDeptname = {
-  height: "30px",
-  width: "300px",
-  marginLeft: "57px",
-  justifyContent: "center",
-};
-const fieldContainer = {
-  display: "flex",
-  alignItems: "center",
-};
 
-const inputCss = {
-  height: "30px",
-  width: "300px",
-  margin: "auto",
-  justifyContent: "center",
-};
-const btnadd = {
-  height: "36px",
-  width: "90px",
-  borderRadius: "8px",
-  backgroundColor: "green",
-};
-const btnCancel = {
-  height: "36px",
-  width: "90px",
-  borderRadius: "8px",
-  backgroundColor: "red",
-};
-
-function AddDeptModal(props) {
-  const { onClose, setDeptDetails, deptDetails } = props;
+function AddDeptModal({ onClose }) {
+  const dispatch = useDispatch();
   const [deptObj, setDeptObj] = useState({
     managerName: "",
     deptName: "",
@@ -95,67 +66,62 @@ function AddDeptModal(props) {
     if (deptObj.deptName !== "") {
       const deptId = new Date().valueOf();
       const temtDept = { ...deptObj, deptId: deptId };
-      setDeptDetails([...deptDetails, temtDept]);
+      dispatch(addDept(temtDept));
       onClose();
     }
   };
 
   return (
-    <div style={styleObj.modal}>
-      <div style={styleObj.modalContent}>
-        <h4>
-          <u>Add Department Details</u>
-        </h4>
+    <Box sx={styleObj.modal}>
+      <Box sx={styleObj.modalContent}>
+        <Typography variant="h5">Add Department Details</Typography>
 
-        <div style={fieldContainer}>
-          <p>
-            Department Name<span style={star}>*</span>:
-          </p>
-          <input
-            style={inputCssDeptname}
-            type="text"
-            name="deptName"
-            value={deptObj.deptName}
-            onChange={(e) => handleChange(e.target.value, "deptName")}
-            placeholder="Enter the Department name"
-            onKeyPress={(e) => handleKeyPress(e)}
-          />
-        </div>
+        <TextField
+          varient="Filled"
+          label="Department Name"
+          sx={{ marginTop: "20px", width: "500px" }}
+          value={deptObj.deptName}
+          onChange={(e) => handleChange(e.target.value, "deptName")}
+          placeholder="Enter the Department name"
+          onKeyPress={(e) => handleKeyPress(e)}
+        />
 
-        <div style={fieldContainer}>
-          <p>Manager:</p>
-          <input
-            style={inputCss}
-            type="text"
-            name="Manager"
-            value={deptObj.managerName}
-            onChange={(e) => handleChange(e.target.value, "managerName")}
-            placeholder="Enter the Manager name"
-          />
-        </div>
+        <TextField
+          varient="Filled"
+          label="Manager"
+          sx={{ marginTop: "20px", width: "500px" }}
+          value={deptObj.managerName}
+          onChange={(e) => handleChange(e.target.value, "managerName")}
+          placeholder="Enter the Manager name"
+        />
 
-        <div style={fieldContainer}>
-          <p>Location:</p>
-          <input
-            style={inputCss}
-            type="text"
-            name="Location"
-            value={deptObj.location}
-            onChange={(e) => handleChange(e.target.value, "location")}
-            placeholder="Enter the Location"
-          />
-        </div>
+        <TextField
+          varient="Filled"
+          label="Location"
+          sx={{ marginTop: "20px", width: "500px" }}
+          value={deptObj.location}
+          onChange={(e) => handleChange(e.target.value, "location")}
+          placeholder="Enter the Location"
+        />
 
-        <div style={styleObj.btnInModalContent}>
-          <button style={btnCancel} onClick={() => onClose()}>
+        <Box sx={styleObj.btnInModalContent}>
+          <Button
+            varient="contained"
+            sx={{ backgroundColor: "red", color: "black" }}
+            onClick={() => onClose()}
+          >
             Cancel
-          </button>
-          <button style={btnadd} onClick={() => onAddClick()}>
+          </Button>
+          <Button
+            variant="contained"
+            sx={{ backgroundColor: "green", color: "black" }}
+            onClick={() => onAddClick()}
+          >
             Add
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </Box>
+      </Box>
+    </Box>
   );
 }
 

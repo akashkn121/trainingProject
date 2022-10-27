@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addEmp, editData } from "./redux/action/department";
+import { getDeptList } from "./redux/reducer/deparment";
 
 const mainContainer = {
   position: "fixed",
@@ -86,7 +89,9 @@ const buttons = {
 };
 
 const AddEmployeeModal = (props) => {
-  const { onClose, deptDetails, setDeptDetails, selectedDeptObj } = props;
+  const deptDetails = useSelector(getDeptList);
+  const dispatch = useDispatch();
+  const { onClose, selectedDeptObj } = props;
   const [empObj, setempObj] = useState({});
 
   const handleClick = () => {
@@ -97,8 +102,8 @@ const AddEmployeeModal = (props) => {
 
     const deptArr1 = deptDetails.slice(0, selectedIndex);
     const deptArr2 = deptDetails.slice(selectedIndex + 1);
+    dispatch(editData([...deptArr1, newSelectedDeptObj, ...deptArr2]));
 
-    setDeptDetails([...deptArr1, newSelectedDeptObj, ...deptArr2]);
     onClose();
   };
 

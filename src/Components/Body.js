@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import AddEmployeeModal from "./AddEmployeeModal";
 import EditDept from "./EditDept";
 import EditEmp from "./EditEmp";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { getDeptList } from "./redux/reducer/deparment";
+import { editData } from "./redux/action/department";
 
 const styleObj = {
   list: {
@@ -105,9 +108,9 @@ const tableCss = {
   },
 };
 
-const Body = (props) => {
-  const { selectedDeptId, deptDetails, setDeptDetails, setSelectedDeptId } =
-    props;
+const Body = ({ selectedDeptId, setDeptDetails, setSelectedDeptId }) => {
+  const deptDetails = useSelector(getDeptList);
+  const dispatch = useDispatch();
   const [showEmpModal, setShowEmpModal] = useState(false);
   const [showEmpEdit, setShowEmpEdit] = useState(null);
   const [openEditDeptDetails, onDeptEdit] = useState(false);
@@ -121,7 +124,7 @@ const Body = (props) => {
     const indexWantsToDelete = deptDetails.indexOf(selectedDeptObj);
     const deptArr1 = deptDetails.slice(0, indexWantsToDelete) || [];
     const deptArr2 = deptDetails.slice(indexWantsToDelete + 1) || [];
-    setDeptDetails([...deptArr1, ...deptArr2] || []);
+    dispatch(editData([...deptArr1, ...deptArr2]));
     setSelectedDeptId(null);
   };
 
@@ -136,7 +139,7 @@ const Body = (props) => {
 
     const deptArr1 = deptDetails.slice(0, selectedIndex);
     const deptArr2 = deptDetails.slice(selectedIndex + 1);
-    setDeptDetails([...deptArr1, newSelectedDept, ...deptArr2]);
+    dispatch(editData([...deptArr1, newSelectedDept, ...deptArr2]));
   };
 
   const editEmp = (empObj) => {
@@ -212,11 +215,7 @@ const Body = (props) => {
       {showEmpModal && (
         <AddEmployeeModal
           onClose={() => setShowEmpModal(false)}
-          deptDetails={deptDetails}
-          setDeptDetails={setDeptDetails}
-          // setSelectedDept={setSelectedDept}
           selectedDeptObj={selectedDeptObj}
-          // departmentId={departmentId}
         />
       )}
 
@@ -292,8 +291,6 @@ const Body = (props) => {
         <EditDept
           onClose={() => onDeptEdit(false)}
           selectedDeptObj={selectedDeptObj}
-          deptDetails={deptDetails}
-          setDeptDetails={setDeptDetails}
         />
       )}
     </Box>

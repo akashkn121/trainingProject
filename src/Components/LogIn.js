@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, Typography, TextField, Button } from "@mui/material";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUserList } from "./redux/reducer/login";
+import { loggedUser } from "./redux/action/login";
 // import { getUser } from "./redux/action/login";
 
 const logInCss = {
@@ -29,9 +30,10 @@ const logInCss = {
 
 const LogIn = () => {
   const history = useHistory();
-  // const dispatch = useDispatch();
   const userLists = useSelector(getUserList);
-  // const userLists_2 = useDispatch(getUser);
+  // const userLists2 = useSelector((state) => state);
+  debugger;
+  const dispatch = useDispatch();
   const [userToLogIn, setUserToLogIn] = useState({ emailId: "", password: "" });
 
   const handleChange = (value, fieldName) => {
@@ -53,8 +55,7 @@ const LogIn = () => {
           item.emailId === userToLogIn.emailId &&
           item.password === userToLogIn.password
       );
-      // setUserUsing(selectedUser);
-
+      dispatch(loggedUser(selectedUser));
       selectedUser.length > 0
         ? history.push("/home")
         : alert("Invalid EmailId or Password");

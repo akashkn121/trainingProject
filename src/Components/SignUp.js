@@ -30,7 +30,7 @@ const signUpCss = {
   },
 };
 
-const SignUp = ({ setUserDetails, userDetails }) => {
+const SignUp = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [tempObj, setTempObj] = useState({
@@ -52,9 +52,7 @@ const SignUp = ({ setUserDetails, userDetails }) => {
   const handleClick = () => {
     if (tempObj.emailId !== "" && tempObj.password !== "") {
       // setUserDetails([...userDetails, tempObj]);
-      debugger;
       dispatch(addUser(tempObj));
-
       history.push("/");
     } else {
       alert("enter Email and Password");
