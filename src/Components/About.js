@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Axios from "axios";
+import axios from "axios";
 
 const aboutCss = {
   content: {
@@ -12,22 +12,26 @@ const About = () => {
   const [data, setData] = useState(null);
 
   const getData = () => {
-    Axios.get("https://jsonplaceholder.typicode.com/todos").then((item) =>
-      setData(item.data)
-    );
+    axios
+      .get("https://jsonplaceholder.typicode.com/todos")
+      .then((item) => setData(item.data));
   };
   return (
     <div style={aboutCss.content}>
-      <button onClick={() => getData()}>Click For Data</button>
-      {data &&
-        data.map((item) => (
-          <ul>
-            *********************
-            <li>{item.userId}</li>
-            <li>{item.id}</li>
-            <li>{item.title}</li>
-          </ul>
-        ))}
+      {!data && <button onClick={() => getData()}>Click For Data</button>}
+      {data && <button onClick={() => setData(null)}>Close</button>}
+
+      <div style={{ overflow: "scroll", height: "95vh" }}>
+        {data &&
+          data.map((item) => (
+            <ul>
+              *********************
+              <li>{item.userId}</li>
+              <li>{item.id}</li>
+              <li>{item.title}</li>
+            </ul>
+          ))}
+      </div>
     </div>
   );
 };
