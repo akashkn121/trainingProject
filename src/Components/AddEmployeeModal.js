@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addEmp, editData } from "./redux/action/department";
+import { editData } from "./redux/action/department";
 import { getDeptList } from "./redux/reducer/deparment";
 
 const mainContainer = {
