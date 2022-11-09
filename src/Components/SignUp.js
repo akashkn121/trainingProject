@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, Typography, TextField, Button } from "@mui/material";
-import { useDispatch } from "react-redux";
-import { addUser } from "./redux/action/login";
+// import { useDispatch } from "react-redux";
+// import { addUser } from "./redux/action/login";
+import axios from "axios";
+import { API_PATH, SIGN_UP } from "../config/const";
 
 const signUpCss = {
   main: {
@@ -32,7 +34,7 @@ const signUpCss = {
 
 const SignUp = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [tempObj, setTempObj] = useState({
     userName: "",
     emailId: "",
@@ -52,7 +54,18 @@ const SignUp = () => {
   const handleClick = () => {
     if (tempObj.emailId !== "" && tempObj.password !== "") {
       // setUserDetails([...userDetails, tempObj]);
-      dispatch(addUser(tempObj));
+      // dispatch(addUser(tempObj));
+      axios
+        .post(`${API_PATH}${SIGN_UP}`, {
+          params: {
+            action: "SIGNUP",
+            user_email: tempObj.emailId.trim(),
+            user_name: tempObj.userName.trim(),
+            user_password: tempObj.password.trim(),
+          },
+        })
+        .then((res) => console.log("data send"))
+        .catch(console.error());
       history.push("/");
     } else {
       alert("enter Email and Password");

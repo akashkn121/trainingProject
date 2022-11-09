@@ -14,7 +14,7 @@ const loginReducer = (state = initialState, action) => {
       return { userLists: [...state.userLists, data] };
 
     case LOGGED_USER:
-      return { loggedUser: data[0] };
+      return { loggedUser: data };
 
     default:
       return state;

@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { editData } from "./redux/action/department";
@@ -184,9 +185,17 @@ const AddEmployeeModal = (props) => {
           <button style={addbtn} onClick={() => handleClick()}>
             Add
           </button>
+          <Button
+            className={"action-color"}
+            variant="contained"
+            color="primary"
+          >
+            EDIT
+          </Button>
         </div>
       </div>
     </div>
   );
 };
+
 export default AddEmployeeModal;

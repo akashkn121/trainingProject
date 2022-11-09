@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, Typography, TextField, Button } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserList } from "./redux/reducer/login";
-import { loggedUser } from "./redux/action/login";
+// import { getUserList } from "./redux/reducer/login";
 // import { getUser } from "./redux/action/login";
+import { API_PATH, LOG_IN } from "./../config/const";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loggedUser } from "./redux/action/login";
 
 const logInCss = {
   main: {
@@ -30,12 +32,11 @@ const logInCss = {
 
 const LogIn = () => {
   const history = useHistory();
-  const userLists = useSelector(getUserList);
-  // const userLists2 = useSelector((state) => state);
-  debugger;
   const dispatch = useDispatch();
-  const [userToLogIn, setUserToLogIn] = useState({ emailId: "", password: "" });
+  // const userLists = useSelector(getUserList);
+  // const userLists2 = useSelector((state) => state);
 
+  const [userToLogIn, setUserToLogIn] = useState({ emailId: "", password: "" });
   const handleChange = (value, fieldName) => {
     setUserToLogIn({ ...userToLogIn, [fieldName]: value });
   };
@@ -50,15 +51,34 @@ const LogIn = () => {
     if (userToLogIn.emailId === "" || userToLogIn.password === "") {
       alert(" EmailId and Password should not be empty");
     } else {
-      const selectedUser = userLists.filter(
-        (item) =>
-          item.emailId === userToLogIn.emailId &&
-          item.password === userToLogIn.password
-      );
-      dispatch(loggedUser(selectedUser));
-      selectedUser.length > 0
-        ? history.push("/home")
-        : alert("Invalid EmailId or Password");
+      axios
+        .get(`${API_PATH}${LOG_IN}`, {
+          params: {
+            action: "LOGIN",
+            useremail: userToLogIn.emailId,
+            password: userToLogIn.password,
+          },
+        })
+        .then((response) => {
+          console.log("====================================");
+          console.log(response);
+          console.log("====================================");
+          response.data.length > 0
+            ? history.push("/home")
+            : alert("Invalid EmailId or Password");
+          dispatch(loggedUser(response.data[0]));
+        });
+
+      // .then((item) => setLoggedUser(item.data));
+
+      // const selectedUser = userLists.filter(
+      //   (item) =>
+      //     item.emailId === userToLogIn.emailId &&
+      //     item.password === userToLogIn.password
+      // );
+      // loggedUser.userId != null
+      //   ? history.push("/home")
+      //   : alert("Invalid EmailId or Password");
     }
   };
 
@@ -89,14 +109,14 @@ const LogIn = () => {
           <Button
             variant="outlined"
             sx={{ color: "blue", height: "25px" }}
-            onClick={() => history.push("/signUp")}
+            onClick={() => history.push("/signup")}
           >
             Sign Up
           </Button>
           <Button
             variant="text"
             sx={{ color: "green" }}
-            onClick={() => handleClick()}
+            onClick={handleClick}
             underline="hover"
           >
             <u> Log In</u>

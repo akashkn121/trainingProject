@@ -4,6 +4,7 @@ import LogIn from "./Components/LogIn";
 import SignUp from "./Components/SignUp";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Layout from "./Components/Layout";
+// import { useState } from "react";
 
 function App() {
   return (
@@ -13,10 +14,12 @@ function App() {
           <Route exact path="/">
             <LogIn />
           </Route>
-          <Route path="/signUp">
+          <Route path="/signup">
             <SignUp />
           </Route>
-          <Route path="/home" component={Layout} />
+          <Route path="/home">
+            <Layout />
+          </Route>
           <Route path="/about" component={About} />
           <Route path="/contact" component={Contact} />
         </Switch>
